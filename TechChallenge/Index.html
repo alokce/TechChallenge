@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Tech Challenge</title>
+
+    <style>
+        .center {
+            margin-top: 10%;
+            margin-left: 35%;
+            border: 1px solid;
+            width: 350px;
+            height: 150px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="center">
+        <div style="margin-top:10px; margin-left:50px">
+            <label>Name:</label>
+
+            <input type="text" id="nameId" name="name" style="margin-left:26px">
+        </div>
+        <div style="margin-top:10px; margin-left:50px">
+            <label>Number:</label>
+
+            <input type="number" id="numberId" name="number" style="margin-left:12px">
+        </div>
+        <div style="margin-top:10px; margin-left:78px">
+            <input type="submit" id="submitButton" name="submitButton" value="Submit" style="margin-left:150px">
+        </div>
+    </div>
+    <div style="margin-left:35%; margin-top:10px">
+        <label id="lblName"></label><br/>
+
+        <label id="lblWord"></label>
+    </div>
+    <script src="scripts/jquery-2.2.4.js"></script>
+    
+    <script>
+        $(document).ready(function () {   
+            
+            $("#submitButton").click(function () {
+
+                var name = $('#nameId').val();
+                var number = $('#numberId').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'api/NumberToWord?name=' + name + '&number=' + number,
+                    success: function (data) {
+                        $("#lblName").text(data.Name);
+                        $("#lblWord").text(data.Word);
+                    },
+                    error: function (data) {                        
+                        $("#lblName").text(data.responseJSON.Message);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
